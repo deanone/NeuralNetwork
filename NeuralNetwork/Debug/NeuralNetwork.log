@@ -1,0 +1,9 @@
+﻿  NeuralNetwork.cpp
+c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(25): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(53): warning C4018: '<': signed/unsigned mismatch
+c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(145): warning C4018: '<': signed/unsigned mismatch
+c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(149): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(150): warning C4018: '<': signed/unsigned mismatch
+c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(166): warning C4018: '<': signed/unsigned mismatch
+  NeuralNetwork.vcxproj -> C:\Users\thana\VisualC++Projects\NeuralNetwork\Debug\NeuralNetwork.exe
+  NeuralNetwork.vcxproj -> C:\Users\thana\VisualC++Projects\NeuralNetwork\Debug\NeuralNetwork.pdb (Partial PDB)
