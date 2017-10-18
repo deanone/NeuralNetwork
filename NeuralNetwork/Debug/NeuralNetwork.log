@@ -1,9 +1,20 @@
-﻿  NeuralNetwork.cpp
-c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(25): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+﻿  stdafx.cpp
+  PropertiesParser.cpp
+  Neuron.cpp
+c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuron.cpp(99): warning C4018: '<': signed/unsigned mismatch
+c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuron.cpp(105): warning C4018: '<': signed/unsigned mismatch
+c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuron.cpp(119): warning C4018: '<': signed/unsigned mismatch
+  NeuralNetwork.cpp
 c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(53): warning C4018: '<': signed/unsigned mismatch
 c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(145): warning C4018: '<': signed/unsigned mismatch
 c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(149): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(150): warning C4018: '<': signed/unsigned mismatch
 c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\neuralnetwork.cpp(166): warning C4018: '<': signed/unsigned mismatch
+  MathFunc.cpp
+  main.cpp
+c:\users\thana\visualc++projects\neuralnetwork\neuralnetwork\main.cpp(12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Layer.cpp
+  GenericFunc.cpp
+  Generating Code...
   NeuralNetwork.vcxproj -> C:\Users\thana\VisualC++Projects\NeuralNetwork\Debug\NeuralNetwork.exe
   NeuralNetwork.vcxproj -> C:\Users\thana\VisualC++Projects\NeuralNetwork\Debug\NeuralNetwork.pdb (Partial PDB)

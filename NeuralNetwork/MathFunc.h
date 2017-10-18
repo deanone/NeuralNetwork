@@ -11,6 +11,8 @@ namespace mfnc
 	// rectifier linear unit
 	double Relu(const double& x);
 	double ReluDeriv(const double& x);
+	double Identity(const double& x);
+	double IdentityDeriv(const double& x);
 	double CreateRandomNumber(const double& dMin, const double& dMax);
 }
 

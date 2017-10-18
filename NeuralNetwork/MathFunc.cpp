@@ -40,6 +40,15 @@ double mfnc::ReluDeriv(const double& x)
 		return 1.0;
 }
 
+double mfnc::Identity(const double& x)
+{
+	return x;
+}
+double mfnc::IdentityDeriv(const double& x)
+{
+	return 1.0;
+}
+
 /* Random double number generator using the old C++ way */
 double mfnc::CreateRandomNumber(const double& dMin, const double& dMax)
 {

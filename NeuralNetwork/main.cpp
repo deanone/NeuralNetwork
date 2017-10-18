@@ -1,13 +1,14 @@
 #include "stdafx.h"
 #include "NeuralNetwork.h"
+#include "GenericFunc.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
 int main()
 {
-	std::string nnConfigFilename = "C:\\Users\\thana\\Desktop\\nn.properties";
-	std::string trainDataFilename = "C:\\Users\\thana\\Desktop\\wine_train.csv";
-	std::string testDataFilename = "C:\\Users\\thana\\Desktop\\wine_test.csv";
+	std::string nnConfigFilename = gnfnc::GetExecutablePathAndMatchItWithFilename("nn.properties");
+	std::string trainDataFilename = gnfnc::GetExecutablePathAndMatchItWithFilename("train.csv");
+	std::string testDataFilename = gnfnc::GetExecutablePathAndMatchItWithFilename("test.csv");
 	srand(time(NULL));
 	NeuralNetwork MLP(nnConfigFilename);
 	MLP.Build();

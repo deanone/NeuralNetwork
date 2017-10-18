@@ -119,9 +119,9 @@ void NeuralNetwork::Train(std::string trainDataFilename)
 			// Transform string line to double training vector
 			std::vector<double> trainingVector;
 			trainingVector.push_back(1.0);	// bias input
-			for (size_t i = 1; i < items.size(); i++)
+			for (size_t i = 0; i < (items.size() - 1); i++)
 				trainingVector.push_back(stod(items[i]));
-			target = stoi(items[0]);
+			target = stod(items[items.size() - 1]);
 			items.clear();
 
 //############################################################################# Training ###############################################################################################
@@ -217,16 +217,16 @@ void NeuralNetwork::Run(std::string testDataFilename)
 			// Transform string line to double test vector
 			std::vector<double> testVector;
 			testVector.push_back(1.0);
-			for (size_t i = 1; i < items.size(); i++)
+			for (size_t i = 0; i < (items.size() - 1); i++)
 				testVector.push_back(stod(items[i]));
-			target = stoi(items[0]);
+			target = stod(items[items.size() - 1]);
 			items.clear();
 
 			int layer_id = 0;
 			for (; layer_id < numOfLayers; layer_id++)
 				layers[layer_id]->ForwardPass(testVector);
 
-			int output = static_cast<int>(std::round(GetLayer(numOfLayers - 1)->GetNeuron(0)->GetOutput()));
+			double output = GetLayer(numOfLayers - 1)->GetNeuron(0)->GetOutput();
 			
 			std::cout << target << " " << output << std::endl;
 

@@ -43,6 +43,9 @@ void Neuron::ComputeOutput()
 		case 3:
 			output = mfnc::Relu(activation);
 			break;
+		case 4:
+			output = mfnc::Identity(activation);
+			break;
 		default:
 			break;
 	}
@@ -60,6 +63,9 @@ void Neuron::ComputeOutputDeriv()
 			break;
 		case 3:
 			outputDeriv = mfnc::ReluDeriv(activation);
+			break;
+		case 4:
+			outputDeriv = mfnc::IdentityDeriv(activation);
 			break;
 		default:
 			break;

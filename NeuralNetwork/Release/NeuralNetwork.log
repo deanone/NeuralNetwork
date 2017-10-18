@@ -1,16 +1,22 @@
-﻿  NeuralNetwork.cpp
-NeuralNetwork.cpp(25): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+﻿  stdafx.cpp
+  GenericFunc.cpp
+  Layer.cpp
+  main.cpp
+main.cpp(12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  MathFunc.cpp
+  NeuralNetwork.cpp
 NeuralNetwork.cpp(53): warning C4018: '<': signed/unsigned mismatch
 NeuralNetwork.cpp(145): warning C4018: '<': signed/unsigned mismatch
 NeuralNetwork.cpp(149): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 NeuralNetwork.cpp(150): warning C4018: '<': signed/unsigned mismatch
 NeuralNetwork.cpp(166): warning C4018: '<': signed/unsigned mismatch
-  main.cpp
-main.cpp(11): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Neuron.cpp
+Neuron.cpp(99): warning C4018: '<': signed/unsigned mismatch
+Neuron.cpp(105): warning C4018: '<': signed/unsigned mismatch
+Neuron.cpp(119): warning C4018: '<': signed/unsigned mismatch
+  PropertiesParser.cpp
   Generating code
-  4 of 641 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    9 functions had inline decision re-evaluated but remain unchanged
+  All 734 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   NeuralNetwork.vcxproj -> C:\Users\thana\VisualC++Projects\NeuralNetwork\Release\NeuralNetwork.exe
   NeuralNetwork.vcxproj -> C:\Users\thana\VisualC++Projects\NeuralNetwork\Release\NeuralNetwork.pdb (Full PDB)

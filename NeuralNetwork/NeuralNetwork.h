@@ -14,7 +14,7 @@ class NeuralNetwork
 	int activationFuncTypeOuputLayer;
 	double learningRate;
 	std::vector<Layer*> layers;
-	int target;
+	double target;
 public:
 	NeuralNetwork(std::string nnConfigFilename);
 	~NeuralNetwork();
