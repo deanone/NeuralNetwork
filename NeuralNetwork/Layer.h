@@ -6,16 +6,16 @@
 
 class Layer
 {
-	//int id;
-	std::vector<Neuron*> neurons;
+	std::vector<Neuron*> neurons;	// at this point I use raw pointers and manage memory myself. In future versions, I will use smart pointers.
 	int numOfNeurons;
 	int activationFuncType;
+
 public:
 	Layer(int numOfNeurons_, int numOfWeights_, int activationFuncType_);
 	~Layer();
-	//int GetId() const { return id; }
+
 	int GetNumOfNeurons() const { return numOfNeurons; }
-	Neuron* GetNeuron(int neuron_id);
+	Neuron* GetNeuron(int neuronId);
 	auto GetNeurons() { return &neurons; }
 	void ForwardPass(std::vector<double>& input);
 };

@@ -2,10 +2,7 @@
 #include "Neuron.h"
 #include "MathFunc.h"
 
-#include <stdlib.h>     /* srand, rand */
-#include <iostream>
-
-Neuron::Neuron(int numOfWeights_, int activationFuncType_) : numOfWeights(numOfWeights_), activation(-1.0), output(-1.0), outputDeriv(-1.0), activationFuncType(activationFuncType_)
+Neuron::Neuron(int numOfWeights_, int activationFuncType_) : numOfWeights(numOfWeights_), activationFuncType(activationFuncType_), activation(-1.0), output(-1.0), outputDeriv(-1.0)
 {
 	weights.assign(numOfWeights, mfnc::CreateRandomNumber(0, 1));	// the initial value of the weights is the same for all the weights
 	weightsUpdates.assign(numOfWeights, 0.0);
@@ -72,40 +69,36 @@ void Neuron::ComputeOutputDeriv()
 	}
 }
 
-double Neuron::GetWeight(int weight_id)
+double Neuron::GetWeight(int weightId) const
 {
-	if (weight_id >= 0 && weight_id < numOfWeights)
-		return weights[weight_id];
-	else
-		return -1.0;
+	return (weightId >= 0 && weightId < numOfWeights) ? weights[weightId] : -1.0;
 }
 
-double Neuron::GetInput(int input_id)
+double Neuron::GetInput(int inputId) const
 {
-	if (input_id >= 0 && input_id < numOfWeights)
-		return input[input_id];
-	else
-		return -1.0;
+	return (inputId >= 0 && inputId < numOfWeights) ? input[inputId] : -1.0;
 }
 
-void Neuron::AddWeightUpdate(int weight_id, double weightUpdate)
+void Neuron::AddWeightUpdate(int weightId, double weightUpdate)
 {
-	if (weight_id >= 0 && weight_id < numOfWeights)
-		weightsUpdates[weight_id] = weightUpdate;
+	if (weightId >= 0 && weightId < numOfWeights)
+		weightsUpdates[weightId] = weightUpdate;
 }
 
 void Neuron::UpdateWeights()
 {
-	for (size_t weight_id = 0; weight_id < numOfWeights; weight_id++)
-		weights[weight_id] += weightsUpdates[weight_id];
+	int weightId = 0;
+	for (; weightId < numOfWeights; ++weightId)
+		weights[weightId] += weightsUpdates[weightId];
 }
 
 void Neuron::Clear()
 {
-	for (size_t weight_id = 0; weight_id < numOfWeights; weight_id++)
+	int weightId = 0;
+	for (; weightId < numOfWeights; ++weightId)
 	{
-		weightsUpdates[weight_id] = 0.0;
-		input[weight_id] = 0.0;
+		weightsUpdates[weightId] = 0.0;
+		input[weightId] = 0.0;
 	}
 
 	activation = -1.0;
@@ -115,11 +108,11 @@ void Neuron::Clear()
 
 void Neuron::PrintWeights()
 {
-	size_t weight_id = 0;
-	for (; weight_id < numOfWeights; weight_id++)
+	int weightId = 0;
+	for (; weightId < numOfWeights; ++weightId)
 	{
-		std::cout << weights[weight_id];
-		if (weight_id != (numOfWeights - 1))
+		std::cout << weights[weightId];
+		if (weightId != (numOfWeights - 1))
 			std::cout << ",";
 	}
 	std::cout << std::endl;

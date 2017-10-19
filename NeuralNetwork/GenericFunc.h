@@ -10,7 +10,8 @@
 namespace gnfnc
 {
 	std::string GetExecutablePath();
-	std::string GetExecutablePathAndMatchItWithFilename(std::string fileName);
+	std::string GetExecutablePathAndMatchItWithFilename(std::string filename);
+	int CountNumberOfLinesInFile(std::string filename);
 }
 
-#endif
+#endif	//!GENERIC_FUNC_H

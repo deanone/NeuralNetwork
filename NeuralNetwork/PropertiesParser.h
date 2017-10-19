@@ -14,11 +14,13 @@ class PropertiesParser
 {
 	/*!A map containing property names as keys and property values as values.*/
 	std::map<std::string, std::string> propMap;
+
 public:
 	PropertiesParser(std::string propertiesFilename);
 	~PropertiesParser();
-	void addPropertiesFile(std::string propertiesFilename);
-	bool propertyExists(std::string propertyName);
+
+	void AddPropertiesFile(std::string propertiesFilename);
+	bool PropertyExists(std::string propertyName);
 	std::string GetPropertyAsString(std::string propertyName);
 	int GetPropertyAsInt(std::string propertyName);
 	bool GetPropertyAsBool(std::string propertyName);
@@ -31,4 +33,4 @@ public:
 	double GetPropertyAsDoubleOrDefaultTo(std::string propertyName, double defaultPropertyValue);
 };
 
-#endif
+#endif	//!PROPERTIES_PARSER_H

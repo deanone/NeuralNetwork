@@ -1,25 +1,6 @@
 #include "stdafx.h"
 #include "NeuralNetwork.h"
 #include "PropertiesParser.h"
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-
-//int CountNumberOfLinesInFile(std::string filename)
-//{
-//	int numberOfLines = 0;
-//	// filename = path + "/" + filename;
-//	std::string dataline = "";
-//	std::ifstream in(filename.c_str());
-//	if (in.is_open())
-//	{
-//		while (std::getline(in, dataline))
-//			numberOfLines++;
-//		in.close();
-//	}
-//	return numberOfLines;
-//}
 
 NeuralNetwork::NeuralNetwork(std::string nnConfigFilename) : target(-1.0)
 {
@@ -30,14 +11,15 @@ NeuralNetwork::NeuralNetwork(std::string nnConfigFilename) : target(-1.0)
 	learningRate = pp.GetPropertyAsDouble("learningRate");
 	activationFuncTypeHiddenLayers = pp.GetPropertyAsInt("activationFuncTypeHiddenLayers");
 	activationFuncTypeOuputLayer = pp.GetPropertyAsInt("activationFuncTypeOuputLayer");
-	numOfLayers = numberOfIntermediateHiddenLayers + 2;
+	numOfLayers = numberOfIntermediateHiddenLayers + 2;	// number of inermediate hidden layers + first hidden layer + 1 output layer
 }
 
 NeuralNetwork::~NeuralNetwork()
 {
 	if (!layers.empty())
 	{
-		for (size_t i = 0; i < layers.size(); i++)
+		size_t i = 0;
+		for (; i < layers.size(); ++i)
 			delete layers[i];
 		layers.clear();
 	}
@@ -50,7 +32,8 @@ void NeuralNetwork::Build()
 	layers.push_back(layerPtr);
 
 	// Intermediate hidden layers
-	for (size_t i = 0; i < numberOfIntermediateHiddenLayers; i++)
+	int i = 0;
+	for (; i < numberOfIntermediateHiddenLayers; ++i)
 	{
 		Layer* layerPtr = new Layer(numberOfNeuronsPerLayer, numberOfNeuronsPerLayer + 1, activationFuncTypeHiddenLayers);
 		layers.push_back(layerPtr);
@@ -60,41 +43,36 @@ void NeuralNetwork::Build()
 	Layer* outputlayerPtr = new Layer(1, numberOfNeuronsPerLayer + 1, activationFuncTypeOuputLayer);
 	layers.push_back(outputlayerPtr);
 
-	//PrintWeights();
-	//std::cout << std::endl;
-	//std::cout << std::endl;
 }
 
-Layer* NeuralNetwork::GetLayer(int layer_id)
+Layer* NeuralNetwork::GetLayer(int layerId)
 {
-	if (layer_id >= 0 && layer_id < numOfLayers)
-		return layers[layer_id];
-	else
-		return nullptr;
+	return (layerId >= 0 && layerId < numOfLayers) ? layers[layerId] : nullptr;
 }
 
-double NeuralNetwork::ComputeDelta(int layer_id, int neuron_id, int weight_id)
+double NeuralNetwork::ComputeDelta(int layerId, int neuronId, int weightId)
 {
 	double delta = -1.0;
-	if (layer_id == (numOfLayers - 1))	// for output neurons
+	if (layerId == (numOfLayers - 1))	// for output neurons
 	{
-		double output = GetLayer(layer_id)->GetNeuron(neuron_id)->GetOutput();
+		double output = GetLayer(layerId)->GetNeuron(neuronId)->GetOutput();
 		delta = (output - static_cast<double>(target)) * output * (1 - output);
 	}
 	else // for hidden neurons
 	{
 		delta = 0.0;
-		auto neurons = GetLayer(layer_id + 1)->GetNeurons();
-		for (size_t i = 0; i < neurons->size(); i++)
-			delta += ComputeDelta(layer_id + 1, i, weight_id) * neurons->at(i)->GetWeight(weight_id);
+		auto neurons = GetLayer(layerId + 1)->GetNeurons();
+		size_t i = 0;
+		for (; i < neurons->size(); ++i)
+			delta += ComputeDelta(layerId + 1, i, weightId) * neurons->at(i)->GetWeight(weightId);
 	}
 	return delta;
 }
 
-double NeuralNetwork::ComputeWeightUpdate(int layer_id, int neuron_id, int weight_id)
+double NeuralNetwork::ComputeWeightUpdate(int layerId, int neuronId, int weightId)
 {
-	double delta = ComputeDelta(layer_id, neuron_id, weight_id);
-	double input = GetLayer(layer_id)->GetNeuron(neuron_id)->GetInput(weight_id);
+	double delta = ComputeDelta(layerId, neuronId, weightId);
+	double input = GetLayer(layerId)->GetNeuron(neuronId)->GetInput(weightId);
 	double weightUpdate = (-1.0) * learningRate * input * delta;
 	return weightUpdate;
 }
@@ -119,7 +97,8 @@ void NeuralNetwork::Train(std::string trainDataFilename)
 			// Transform string line to double training vector
 			std::vector<double> trainingVector;
 			trainingVector.push_back(1.0);	// bias input
-			for (size_t i = 0; i < (items.size() - 1); i++)
+			size_t i = 0;
+			for (; i < (items.size() - 1); ++i)
 				trainingVector.push_back(stod(items[i]));
 			target = stod(items[items.size() - 1]);
 			items.clear();
@@ -128,44 +107,42 @@ void NeuralNetwork::Train(std::string trainDataFilename)
 
 			// forward pass
 			//std::cout << "Forward pass...\n";
-			int layer_id = 0;
-			size_t neuron_id = -1;
-			size_t weight_id = -1;
-			for (; layer_id < numOfLayers; layer_id++)
-				layers[layer_id]->ForwardPass(trainingVector);
+			int layerId = 0;
+			for (; layerId < numOfLayers; ++layerId)
+				layers[layerId]->ForwardPass(trainingVector);
 
 			// backwards pass
 			//std::cout << "Backwards pass...\n";
-			layer_id = (numOfLayers - 1);
-			for (; layer_id >= 0; layer_id--)
+			layerId = (numOfLayers - 1);
+			for (; layerId >= 0; --layerId)
 			{
-				neuron_id = 0;
-				Layer* layer = GetLayer(layer_id);
+				Layer* layer = GetLayer(layerId);
 				int numOfNeuronsInLayer = layer->GetNumOfNeurons();
-				for (; neuron_id < numOfNeuronsInLayer; neuron_id++)
+				int neuronId = 0;
+				for (; neuronId < numOfNeuronsInLayer; ++neuronId)
 				{
-					weight_id = 0;
-					Neuron* neuron = layer->GetNeuron(neuron_id);
+					Neuron* neuron = layer->GetNeuron(neuronId);
 					int numOfWeights = neuron->GetNumOfWeights();
-					for (; weight_id < numOfWeights; weight_id++)
+					int weightId = 0;
+					for (; weightId < numOfWeights; ++weightId)
 					{
-						double weightUpdate = ComputeWeightUpdate(layer_id, neuron_id, weight_id);
-						neuron->AddWeightUpdate(weight_id, weightUpdate);
+						double weightUpdate = ComputeWeightUpdate(layerId, neuronId, weightId);
+						neuron->AddWeightUpdate(weightId, weightUpdate);
 					}
 				}
 			}
 
 			// update weights and clear input and weightsUpdates vectors to be ready for the next observation
 			//std::cout << "Updating weights...\n";
-			layer_id = 0;
-			for (; layer_id < numOfLayers; layer_id++)
+			layerId = 0;
+			for (; layerId < numOfLayers; ++layerId)
 			{
-				Layer* layer = GetLayer(layer_id);
+				Layer* layer = GetLayer(layerId);
 				int numOfNeuronsInLayer = layer->GetNumOfNeurons();
-				neuron_id = 0;
-				for (; neuron_id < numOfNeuronsInLayer; neuron_id++)
+				int neuronId = 0;
+				for (; neuronId < numOfNeuronsInLayer; ++neuronId)
 				{
-					Neuron* neuron = layer->GetNeuron(neuron_id);
+					Neuron* neuron = layer->GetNeuron(neuronId);
 					neuron->UpdateWeights();
 					neuron->Clear();
 				}
@@ -180,22 +157,19 @@ void NeuralNetwork::Train(std::string trainDataFilename)
 
 void NeuralNetwork::PrintWeights()
 {
-	int layer_id = 0;
-	int neuron_id = -1;
-	int weight_id = -1;
-	for (; layer_id < numOfLayers; layer_id++)
+	int layerId = 0;
+	for (; layerId < numOfLayers; ++layerId)
 	{
-		Layer* layer = GetLayer(layer_id);
+		Layer* layer = GetLayer(layerId);
 		int numOfNeuronsInLayer = layer->GetNumOfNeurons();
-		neuron_id = 0;
-		for (; neuron_id < numOfNeuronsInLayer; neuron_id++)
+		int neuronId = 0;
+		for (; neuronId < numOfNeuronsInLayer; ++neuronId)
 		{
-			std::cout << layer_id << "," << neuron_id << ",";
-			Neuron* neuron = layer->GetNeuron(neuron_id);
+			std::cout << layerId << "," << neuronId << ",";
+			Neuron* neuron = layer->GetNeuron(neuronId);
 			neuron->PrintWeights();
 		}
 	}
-
 }
 
 void NeuralNetwork::Run(std::string testDataFilename)
@@ -217,19 +191,18 @@ void NeuralNetwork::Run(std::string testDataFilename)
 			// Transform string line to double test vector
 			std::vector<double> testVector;
 			testVector.push_back(1.0);
-			for (size_t i = 0; i < (items.size() - 1); i++)
+			size_t i = 0;
+			for (; i < (items.size() - 1); ++i)
 				testVector.push_back(stod(items[i]));
 			target = stod(items[items.size() - 1]);
 			items.clear();
 
-			int layer_id = 0;
-			for (; layer_id < numOfLayers; layer_id++)
-				layers[layer_id]->ForwardPass(testVector);
+			int layerId = 0;
+			for (; layerId < numOfLayers; ++layerId)
+				layers[layerId]->ForwardPass(testVector);
 
 			double output = GetLayer(numOfLayers - 1)->GetNeuron(0)->GetOutput();
-			
 			std::cout << target << " " << output << std::endl;
-
 		}
 		in.close();
 	}

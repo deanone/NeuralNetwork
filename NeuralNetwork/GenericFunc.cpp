@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "GenericFunc.h"
 
-#include <vector>
-#include <sstream>
-#include <windows.h>
-
 /*!
 *Function that returns the path of the project's executable.
 *@return the path of the project's executable.
@@ -40,12 +36,26 @@ std::string gnfnc::GetExecutablePath()
 *Function that concatenates the path of the project's executable with a filename.
 *@return the concatenation of the path of the project's executable with a filename.
 */
-std::string gnfnc::GetExecutablePathAndMatchItWithFilename(std::string fileName)
+std::string gnfnc::GetExecutablePathAndMatchItWithFilename(std::string filename)
 {
 	std::string execPath = GetExecutablePath();
 	size_t found = execPath.find_last_of("\\");
 	execPath = execPath.substr(0, found);
 	std::stringstream ss;
-	ss << execPath << "\\" << fileName;
+	ss << execPath << "\\" << filename;
 	return ss.str();
+}
+
+int gnfnc::CountNumberOfLinesInFile(std::string filename)
+{
+	int numberOfLines = 0;
+	std::string dataline = "";
+	std::ifstream in(filename);
+	if (in.is_open())
+	{
+		while (std::getline(in, dataline))
+			numberOfLines++;
+		in.close();
+	}
+	return numberOfLines;
 }

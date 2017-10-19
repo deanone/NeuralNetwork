@@ -10,6 +10,20 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+#include <string>
+
+#include <windows.h>
+#include <cmath>
+#include <cstdlib>     /* srand, rand */
+
+#include <numeric>
+#include <algorithm>
+
+#include <vector>
 
 
 // TODO: reference additional headers your program requires here

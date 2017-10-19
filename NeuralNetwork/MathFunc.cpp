@@ -1,15 +1,10 @@
 #include "stdafx.h"
 #include "MathFunc.h"
 
-#include <math.h>
-#include <algorithm>
-#include <iostream>
-
 double mfnc::Sigmoid(const double& x)
 {
 	double expValue = exp(-alpha * x);
 	double sig = 1 / (1 + expValue);
-	//std::cout << sig << std::endl;
 	return sig;
 }
 
@@ -27,17 +22,13 @@ double mfnc::TanhDeriv(const double& x)
 
 double mfnc::Relu(const double& x)
 {
-	double rel = std::max(0.0, x);
-	//std::cout << rel << std::endl;
+	double rel = max(0.0, x);
 	return rel;
 }
 
 double mfnc::ReluDeriv(const double& x)
 {
-	if (x < 0.0)
-		return 0.0;
-	else
-		return 1.0;
+	return (x < 0.0) ? 0.0 : 1.0;
 }
 
 double mfnc::Identity(const double& x)

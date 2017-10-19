@@ -1,4 +1,5 @@
 #ifndef NEURAL_NETWORK_H
+#define NEURAL_NETWORK_H
 
 #include <map>
 #include <vector>
@@ -6,25 +7,30 @@
 
 class NeuralNetwork
 {
+	std::vector<Layer*> layers;
+	double learningRate;
+	double target;
 	int numOfLayers;
 	int numberOfIntermediateHiddenLayers;
 	int	numberOfNeuronsPerLayer;
 	int	numberOfInputs;
 	int activationFuncTypeHiddenLayers;
 	int activationFuncTypeOuputLayer;
-	double learningRate;
-	std::vector<Layer*> layers;
-	double target;
+
 public:
 	NeuralNetwork(std::string nnConfigFilename);
 	~NeuralNetwork();
 
-	Layer* GetLayer(int layer_id);
-	double ComputeDelta(int layer_id, int neuron_id, int weight_id);
-	double ComputeWeightUpdate(int layer_id, int neuron_id, int weight_id);
+	Layer* GetLayer(int layerId);
+	double ComputeDelta(int layerId, int neuronId, int weightId);
+	double ComputeWeightUpdate(int layerId, int neuronId, int weightId);
+
 	void Build();
+
 	void Train(std::string trainDataFilename);
 	void Run(std::string testDataFilename);
+
 	void PrintWeights();
 };
-#endif	// NEURAL_NETWORK_H
+
+#endif	// !NEURAL_NETWORK_H
